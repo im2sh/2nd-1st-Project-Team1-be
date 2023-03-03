@@ -1,0 +1,5 @@
+jpa:
+  hibernate.ddl-auto: create
+  properties:
+    hibernate:
+      format_sql: true
