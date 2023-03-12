@@ -1,5 +1,4 @@
-<<<<<<< Updated upstream
-=======
+
 spring:
   h2:
     console:
@@ -16,4 +15,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
->>>>>>> Stashed changes
