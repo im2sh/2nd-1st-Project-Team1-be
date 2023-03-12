@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class LectureDetail {
 
     @Id
@@ -28,6 +27,4 @@ public class LectureDetail {
 
     @Enumerated(EnumType.STRING)
     private LectureType lectureType;
-
-
 }

@@ -1,7 +1,8 @@
 package com.gdsc.canigraduate.domain.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
-import com.gdsc.canigraduate.domain.user.Member;
+import com.gdsc.canigraduate.domain.user.User;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +23,9 @@ public class Lecture extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
 
     private String semester;
 
@@ -35,4 +36,12 @@ public class Lecture extends BaseEntity {
     @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
     private List<LectureDetail> lectureDetails = new ArrayList<>();
 
+
+    @Builder
+    public Lecture(String semester, Integer majorCredit, Integer cultureCredit, Integer normalCredit){
+        this.semester = semester;
+        this.majorCredit = majorCredit;
+        this.cultureCredit = cultureCredit;
+        this.normalCredit = normalCredit;
+    }
 }
