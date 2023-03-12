@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Lecture extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LECTURE_ID")
     private Long id;
 
