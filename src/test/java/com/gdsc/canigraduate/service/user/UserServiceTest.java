@@ -1,8 +1,7 @@
-package com.gdsc.canigraduate.service.member;
+package com.gdsc.canigraduate.service.user;
 
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.UserDto;
-import com.gdsc.canigraduate.repository.UserRepository;
+import com.gdsc.canigraduate.dto.user.UserSignUpRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -27,19 +24,19 @@ public class UserServiceTest {
     @Rollback
     public void 회원가입() throws Exception {
         //given
-        UserDto userDto = new UserDto();
-        userDto.setClassId("2020118198");
-        userDto.setName("이석환");
-        userDto.setUserPw("1234");
+        UserSignUpRequest userSignUpRequest = new UserSignUpRequest();
+        userSignUpRequest.setClassId("2020118198");
+        userSignUpRequest.setName("이석환");
+        userSignUpRequest.setUserPw("1234");
         //when
-        Long id = userService.join(userDto);
+        Long id = userService.join(userSignUpRequest);
 
         //then
         Optional<User> user = userService.findOne(id);
         System.out.println(user.get().getClassId());
-        System.out.println(userDto.getClassId());
+        System.out.println(userSignUpRequest.getClassId());
 
-        Assertions.assertThat(user.get().getClassId()).isEqualTo(userDto.getClassId());
+        Assertions.assertThat(user.get().getClassId()).isEqualTo(userSignUpRequest.getClassId());
     }
 
 }
