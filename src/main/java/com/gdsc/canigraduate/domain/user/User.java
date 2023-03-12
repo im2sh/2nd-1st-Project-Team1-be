@@ -8,6 +8,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -35,6 +36,8 @@ public class User extends BaseEntity {
 
     private Integer semester;
 
+    private String token;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Lecture> lectureList = new ArrayList<>();
 
@@ -48,5 +51,10 @@ public class User extends BaseEntity {
         this.classId = classId;
         this.userPw = pw;
         this.name = name;
+        this.token = UUID.randomUUID().toString();
+    }
+
+    public void pwUpdate(String pw){
+        this.userPw = pw;
     }
 }
