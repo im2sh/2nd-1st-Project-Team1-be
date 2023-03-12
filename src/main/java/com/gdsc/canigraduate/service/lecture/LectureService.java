@@ -5,6 +5,10 @@ import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.dto.LectureDto;
 import com.gdsc.canigraduate.repository.LectureRepository;
 import com.gdsc.canigraduate.repository.UserRepository;
+
+import com.gdsc.canigraduate.domain.lecture.LectureDetail;
+import com.gdsc.canigraduate.repository.LectureRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,4 +35,5 @@ public class LectureService {
     public Optional<Lecture> findLectureByUser(User user){
         return lectureRepository.findById(user.getId());
     }
+
 }

@@ -2,6 +2,7 @@ package com.gdsc.canigraduate.domain.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.user.User;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lecture extends BaseEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "LECTURE_ID")
@@ -26,6 +26,7 @@ public class Lecture extends BaseEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+
     private String semester;
 
     private Integer majorCredit;
@@ -34,6 +35,7 @@ public class Lecture extends BaseEntity {
 
     @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
     private List<LectureDetail> lectureDetails = new ArrayList<>();
+
 
     @Builder
     public Lecture(String semester, Integer majorCredit, Integer cultureCredit, Integer normalCredit){

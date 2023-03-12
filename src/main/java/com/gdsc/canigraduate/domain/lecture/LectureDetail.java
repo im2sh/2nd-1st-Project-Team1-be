@@ -27,5 +27,4 @@ public class LectureDetail {
 
     @Enumerated(EnumType.STRING)
     private LectureType lectureType;
-
 }
