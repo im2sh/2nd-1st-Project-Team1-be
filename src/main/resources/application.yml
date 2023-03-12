@@ -1,5 +1,17 @@
-jpa:
-  hibernate.ddl-auto: create
-  properties:
-    hibernate:
-      format_sql: true
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /1stprojecttest # 콘솔의 경로
+
+  datasource:
+    driver-class-name: org.h2.Driver  #h2 드라이버 설정
+    url: jdbc:h2:tcp://localhost/~/1stprojecttest
+    username: sa
+    password:
+  jpa:
+    hibernate.ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
