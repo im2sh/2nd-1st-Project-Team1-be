@@ -8,9 +8,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.fasterxml.jackson.core.io.NumberInput.parseInt;
 
 public class Crawler extends ChromeDriver {
 
@@ -20,15 +22,17 @@ public class Crawler extends ChromeDriver {
         this.manage().window().maximize();
     }
 
-    public void start(String year) {
+    public List<Lecture> getLectures(String year) {
         this.get("https://sy.knu.ac.kr");
 
         this.setEstblYearTo(year);
         this.setSearchOption();
 
-        this.getLecture();
+        List<Lecture> lectures = this.crawl();
 
         this.quit();
+
+        return lectures;
     }
 
     private void setEstblYearTo(String year) {
@@ -47,48 +51,39 @@ public class Crawler extends ChromeDriver {
         this.findElement(By.id("btnSearch")).click();
     }
 
-    private void getLecture() {
+    private List<Lecture> crawl() {
+        ArrayList<Lecture> lectures = new ArrayList<>();
+
         WebElement thead = this.findElement(By.id("grid01_head_table"));
         WebElement tbody = this.findElement(By.id("grid01_body_tbody"));
 
-        try (FileWriter fw = new FileWriter("file.txt")) {
-            fw.write(Lecture.fromTr(thead.findElement(By.tagName("tr"))).toString());
-            fw.write('\n');
+        // head 추가
+        lectures.add(Lecture.fromTr(thead.findElement(By.tagName("tr"))));
 
+        try {
             Thread.sleep(500);
-
-            tbody.findElements(By.tagName("tr"))
-                    .forEach((webElement -> {
-                        try {
-                            if (!webElement.getText().trim().equals("")) {
-                                fw.write(Lecture.fromTr(webElement).toString());
-                                fw.write('\n');
-                            }
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }));
-            int numOfLecture = Integer.parseInt(this.findElement(By.id("wq_uuid_78_lblCount")).getText());
-            System.out.println("numOfLecture = " + numOfLecture);
-
-            WebElement item = tbody.findElements(By.tagName("tr")).get(17);
-            item.click();
-            this.tableDown();
-            item = tbody.findElements(By.tagName("tr")).get(17);
-
-            while (Integer.parseInt(Lecture.fromTr(item).no) != numOfLecture) {
-                fw.write(Lecture.fromTr(item).toString());
-                fw.write('\n');
-                this.tableDown();
-                item = tbody.findElements(By.tagName("tr")).get(17);
-            }
-
-            item = tbody.findElements(By.tagName("tr")).get(17);
-            fw.write(Lecture.fromTr(item).toString());
-            fw.write('\n');
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        // 첫 body 추가
+        tbody.findElements(By.tagName("tr"))
+                .forEach(e -> lectures.add(Lecture.fromTr(e)));
+
+        String numOfLecture = this.findElement(By.id("wq_uuid_78_lblCount")).getText();
+
+        // 18개가 넘으면 테이블을 내리며 크롤링
+        if (parseInt(numOfLecture) >= 18) {
+            tbody.findElements(By.tagName("tr")).get(17).click();
+            Lecture lecture;
+            do {
+                this.tableDown();
+                lecture = Lecture.fromTr(tbody.findElements(By.tagName("tr")).get(17));
+                lectures.add(lecture);
+            } while (!lecture.no.equals(numOfLecture));
+        }
+
+        return lectures;
     }
 
     private void tableDown() {

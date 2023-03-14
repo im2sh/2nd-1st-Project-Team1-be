@@ -3,6 +3,7 @@ package com.gdsc.crawler;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class CrawlerApplication {
@@ -21,6 +22,10 @@ public class CrawlerApplication {
         opts.addArguments("--remote-allow-origins=*");
 
         Crawler crawler = new Crawler(opts, 5);
-        crawler.start(args[0]);
+        List<Lecture> lectures = crawler.getLectures(args[0]);
+
+        for (Lecture l : lectures) {
+            System.out.println("l = " + l);
+        }
     }
 }
