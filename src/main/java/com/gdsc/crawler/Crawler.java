@@ -15,9 +15,8 @@ import java.util.List;
 import static com.fasterxml.jackson.core.io.NumberInput.parseInt;
 
 public class Crawler extends ChromeDriver {
-
-    public Crawler(ChromeOptions chromeOptions, long duration) {
-        super(chromeOptions);
+    public Crawler(long duration) {
+        super(new ChromeOptions().addArguments("--remote-allow-origins=*"));
         this.manage().timeouts().implicitlyWait(Duration.ofSeconds(duration));
         this.manage().window().maximize();
     }
@@ -67,7 +66,7 @@ public class Crawler extends ChromeDriver {
         }
 
         // 첫 body 추가
-        tbody.findElements(By.tagName("tr"))
+        tbody.findElements(By.tagName("tr")).subList(0, 18)
                 .forEach(e -> lectures.add(Lecture.fromTr(e)));
 
         String numOfLecture = this.findElement(By.id("wq_uuid_78_lblCount")).getText();
