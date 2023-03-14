@@ -11,7 +11,7 @@ public class CrawlerApplication {
 
     public static void main(String[] args) {
         if (args.length != 4 || !Pattern.matches(regex, args[3])) {
-            System.out.println("올바른 연도를 입력해주세요.");
+            System.out.println("사용법) [검색옵션1] [검색옵션2] [검색옵션3] [연도] ex) 대학 IT대학 컴퓨터학부 2017");
             System.exit(1);
         }
 
