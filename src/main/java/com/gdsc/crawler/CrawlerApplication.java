@@ -1,7 +1,6 @@
 package com.gdsc.crawler;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -18,10 +17,7 @@ public class CrawlerApplication {
 
         WebDriverManager.chromedriver().setup();
 
-        ChromeOptions opts = new ChromeOptions();
-        opts.addArguments("--remote-allow-origins=*");
-
-        Crawler crawler = new Crawler(opts, 5);
+        Crawler crawler = new Crawler(5);
         List<Lecture> lectures = crawler.getLectures(args[0], args[1], args[2], args[3]);
 
         for (Lecture l : lectures) {
