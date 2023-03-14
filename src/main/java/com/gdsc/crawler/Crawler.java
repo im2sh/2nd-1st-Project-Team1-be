@@ -22,11 +22,11 @@ public class Crawler extends ChromeDriver {
         this.manage().window().maximize();
     }
 
-    public List<Lecture> getLectures(String year) {
+    public List<Lecture> getLectures(String catgegory, String university, String major, String year) {
         this.get("https://sy.knu.ac.kr");
 
         this.setEstblYearTo(year);
-        this.setSearchOption();
+        this.setSearchOption(catgegory, university, major);
 
         List<Lecture> lectures = this.crawl();
 
@@ -41,12 +41,12 @@ public class Crawler extends ChromeDriver {
         estblYear.sendKeys(year);
     }
 
-    private void setSearchOption() {
+    private void setSearchOption(String catgegory, String university, String major) {
         this.findElement(By.id("wq_uuid_67")).click();
 
-        new Select(this.findElement(By.id("schSbjetCd1"))).selectByVisibleText("대학");
-        new Select(this.findElement(By.id("schSbjetCd2"))).selectByVisibleText("IT대학");
-        new Select(this.findElement(By.id("schSbjetCd3"))).selectByVisibleText("컴퓨터학부");
+        new Select(this.findElement(By.id("schSbjetCd1"))).selectByVisibleText(catgegory);
+        new Select(this.findElement(By.id("schSbjetCd2"))).selectByVisibleText(university);
+        new Select(this.findElement(By.id("schSbjetCd3"))).selectByVisibleText(major);
 
         this.findElement(By.id("btnSearch")).click();
     }
