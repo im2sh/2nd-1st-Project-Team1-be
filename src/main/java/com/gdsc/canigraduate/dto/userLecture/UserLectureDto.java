@@ -1,4 +1,4 @@
-package com.gdsc.canigraduate.dto;
+package com.gdsc.canigraduate.dto.userLecture;
 
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import lombok.Builder;

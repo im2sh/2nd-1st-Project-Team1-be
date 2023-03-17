@@ -49,7 +49,7 @@ public class UserService {
 
     @Transactional
     public void modifyUserPw(String token, UserPwModificationRequest request){
-        User user = userRepository.findAllByToken(token);
+        User user = userRepository.findUserByToken(token);
 
         if(user == null){
             throw new IllegalStateException("존재하지 않는 회원입니다.");
