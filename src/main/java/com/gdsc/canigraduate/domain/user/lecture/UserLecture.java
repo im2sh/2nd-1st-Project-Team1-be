@@ -2,6 +2,7 @@ package com.gdsc.canigraduate.domain.user.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.user.User;
+import com.gdsc.canigraduate.dto.userLecture.UserLectureDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +26,7 @@ public class UserLecture extends BaseEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-
     private String semester;
-
     private Integer majorCredit;
     private Integer cultureCredit;
     private Integer normalCredit;
@@ -42,5 +41,9 @@ public class UserLecture extends BaseEntity {
         this.majorCredit = majorCredit;
         this.cultureCredit = cultureCredit;
         this.normalCredit = normalCredit;
+    }
+
+    public void YearToString(Integer year, String semester){
+        this.semester = year.toString() + semester;
     }
 }

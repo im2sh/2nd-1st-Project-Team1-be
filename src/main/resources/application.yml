@@ -1,4 +1,3 @@
-
 spring:
   h2:
     console:
@@ -15,3 +14,4 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
