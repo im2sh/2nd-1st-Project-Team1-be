@@ -1,7 +1,7 @@
 package com.gdsc.canigraduate.domain.user.lecture;
 
 public enum UserLectureType {
-    MAJOR,
-    NORMAL,
-    CULTURE
+    전공,
+    교양,
+    일반선택
 }
