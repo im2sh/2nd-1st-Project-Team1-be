@@ -2,8 +2,9 @@ package com.gdsc.canigraduate.service.lecture;
 
 import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
-import com.gdsc.canigraduate.dto.UserLectureDto;
-import com.gdsc.canigraduate.repository.LectureRepository;
+import com.gdsc.canigraduate.dto.userLecture.UserLectureDto;
+import com.gdsc.canigraduate.repository.UserLectureDetailRepository;
+import com.gdsc.canigraduate.repository.UserLectureRepository;
 import com.gdsc.canigraduate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class LectureService {
-    private final LectureRepository lectureRepository;
+    private final UserLectureRepository userLectureRepository;
+    private final UserLectureDetailRepository userLectureDetailRepository;
     private final UserRepository userRepository;
 
     /**
      * 사용자 lecture 기입
      */
-    @Transactional
-    public Long joinLecture(UserLectureDto userLectureDto) {
-        UserLecture userLecture = userLectureDto.toEntity();
-        return lectureRepository.save(userLecture).getId();
-    }
+//    @Transactional
+//    public Long save() {
+//        //return userLectureRepository.save(userLecture).getId();
+//    }
 
     public Optional<UserLecture> findLectureByUser(User user) {
-        return lectureRepository.findById(user.getId());
+        return userLectureRepository.findById(user.getId());
     }
 
 }
