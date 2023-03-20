@@ -2,6 +2,7 @@ package com.gdsc.canigraduate.service.lecture;
 
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
 import com.gdsc.canigraduate.dto.excel.ExcelData;
+import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import com.gdsc.canigraduate.repository.UserLectureDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,7 @@ public class LectureDetailService {
 
     private final UserLectureDetailRepository userLectureDetailRepository;
 
-    public Long save(ExcelData data){
-        UserLectureDetail lectureDetail = data.toEntity(data);
-        lectureDetail.setType(data.getMajor());
-        return userLectureDetailRepository.save(lectureDetail).getId();
+    public Long save(UserLectureDetail detail){
+        return userLectureDetailRepository.save(detail).getId();
     }
 }
