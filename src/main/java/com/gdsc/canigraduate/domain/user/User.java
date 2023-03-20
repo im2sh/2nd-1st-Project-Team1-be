@@ -12,9 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -47,9 +45,9 @@ public class User extends BaseEntity {
     private Long id;
 
     @Builder
-    public User(String classId, String pw, String name) {
+    public User(String classId, String userPw, String name,String token) {
         this.classId = classId;
-        this.userPw = pw;
+        this.userPw = userPw;
         this.name = name;
         this.token = UUID.randomUUID().toString();
     }
@@ -57,4 +55,5 @@ public class User extends BaseEntity {
     public void pwUpdate(String pw) {
         this.userPw = pw;
     }
+
 }

@@ -2,7 +2,6 @@ package com.gdsc.canigraduate.service.lecture;
 
 import static com.gdsc.canigraduate.util.ExcelUtils.isExcel;
 
-import com.gdsc.canigraduate.domain.user.lecture.UserLectureType;
 import com.gdsc.canigraduate.dto.excel.ExcelData;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -61,6 +60,8 @@ public class FileService {
 
             dataList.add(data);
         }
+
+
         return dataList;
     }
 }

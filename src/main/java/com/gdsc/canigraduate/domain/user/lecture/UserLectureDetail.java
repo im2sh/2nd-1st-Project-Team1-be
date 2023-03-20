@@ -1,7 +1,7 @@
 package com.gdsc.canigraduate.domain.user.lecture;
 
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.userLecture.UserLectureDto;
+import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class UserLectureDetail {
     @Column(name = "DETAIL_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "LECTURE_ID")
     private UserLecture userLecture;
 
@@ -36,7 +36,7 @@ public class UserLectureDetail {
     private Double score; //점수
 
     @Builder
-    public UserLectureDetail(Integer year, String semester, String major, String code, String lectureName,Integer credit, String grade, Double score){
+    public UserLectureDetail(Integer year, String semester, String major, String code, String lectureName,Integer credit, String grade, Double score, UserLecture userLecture){
         this.year = year;
         this.semester = semester;
         this.major = major;
@@ -45,7 +45,9 @@ public class UserLectureDetail {
         this.credit = credit;
         this.grade = grade;
         this.score = score;
+        this.userLecture = userLecture;
     }
+
 
     public void setType(String major){
         if(major.equals("전공") || major.equals("전공필수"))
@@ -56,4 +58,10 @@ public class UserLectureDetail {
             this.userLectureType = UserLectureType.일반선택;
     }
 
+    public void setUserLecture(UserLecture userLecture){
+        this.userLecture = userLecture;
+    }
+    public String YearToString(Integer year, String semester){
+        return year.toString() + semester;
+    }
 }
