@@ -46,6 +46,9 @@ public class UserService {
         List<User> users = userRepository.findAllByClassId(classId);
         return users.get(0);
     }
+    public User findByToken(String token){
+        return userRepository.findUserByToken(token);
+    }
 
     @Transactional
     public void modifyUserPw(String token, UserPwModificationRequest request){
