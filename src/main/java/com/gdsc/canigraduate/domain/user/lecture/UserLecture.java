@@ -2,7 +2,6 @@ package com.gdsc.canigraduate.domain.user.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.userLecture.UserLectureDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,15 +34,22 @@ public class UserLecture extends BaseEntity {
     private List<UserLectureDetail> lectureDetails = new ArrayList<>();
 
 
-    @Builder
-    public UserLecture(String semester, Integer majorCredit, Integer cultureCredit, Integer normalCredit) {
+    public UserLecture(User user){
+        this.user = user;
+    }
+
+
+    public void InitLecture(String semester){
         this.semester = semester;
-        this.majorCredit = majorCredit;
-        this.cultureCredit = cultureCredit;
-        this.normalCredit = normalCredit;
     }
 
     public void YearToString(Integer year, String semester){
         this.semester = year.toString() + semester;
     }
+
+    public void addUserLectureDetail(UserLectureDetail userLectureDetail){
+        lectureDetails.add(userLectureDetail);
+    }
+
+
 }
