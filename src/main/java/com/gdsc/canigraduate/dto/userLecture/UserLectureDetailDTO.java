@@ -17,7 +17,7 @@ public class UserLectureDetailDTO {
     private Double score; //점수
 
     @Builder
-    public UserLectureDetailDTO(Integer year, String semester, String major, String code, String lectureName, Integer credit, String grade, Double score, UserLecture userLecture){
+    public UserLectureDetailDTO(Integer year, String semester, String major, String code, String lectureName, Integer credit, String grade, Double score, UserLecture userLecture) {
         this.year = year;
         this.semester = semester;
         this.major = major;
@@ -28,9 +28,9 @@ public class UserLectureDetailDTO {
         this.score = score;
     }
 
-    public UserLectureDetail toEntity(UserLectureDetailDTO data){
+    public UserLectureDetail toEntity(UserLectureDetailDTO data) {
         UserLectureDetail userLectureDetail = UserLectureDetail.builder()
-                .year(year)
+                .lectureYear(year)
                 .semester(semester)
                 .major(major)
                 .code(code)
@@ -41,7 +41,7 @@ public class UserLectureDetailDTO {
         return userLectureDetail;
     }
 
-    public String YearToString(Integer year, String semester){
+    public String YearToString(Integer year, String semester) {
         return year.toString() + semester;
     }
 }

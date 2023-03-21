@@ -1,7 +1,5 @@
 package com.gdsc.canigraduate.domain.user.lecture;
 
-import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +24,7 @@ public class UserLectureDetail {
     @Enumerated(EnumType.STRING)
     private UserLectureType userLectureType;
 
-    private Integer year; // 연도
+    private Integer lectureYear; // 연도
     private String semester; // 학기
     private String major; // 교과목 구분
     private String code; // 교과목코드
@@ -36,8 +34,8 @@ public class UserLectureDetail {
     private Double score; //점수
 
     @Builder
-    public UserLectureDetail(Integer year, String semester, String major, String code, String lectureName,Integer credit, String grade, Double score, UserLecture userLecture){
-        this.year = year;
+    public UserLectureDetail(Integer lectureYear, String semester, String major, String code, String lectureName, Integer credit, String grade, Double score, UserLecture userLecture) {
+        this.lectureYear = lectureYear;
         this.semester = semester;
         this.major = major;
         this.code = code;
@@ -49,19 +47,20 @@ public class UserLectureDetail {
     }
 
 
-    public void setType(String major){
-        if(major.equals("전공") || major.equals("전공필수"))
+    public void setType(String major) {
+        if (major.equals("전공") || major.equals("전공필수"))
             this.userLectureType = UserLectureType.전공;
-        else if(major.equals("교양"))
+        else if (major.equals("교양"))
             this.userLectureType = UserLectureType.교양;
         else
             this.userLectureType = UserLectureType.일반선택;
     }
 
-    public void setUserLecture(UserLecture userLecture){
+    public void setUserLecture(UserLecture userLecture) {
         this.userLecture = userLecture;
     }
-    public String YearToString(Integer year, String semester){
+
+    public String YearToString(Integer year, String semester) {
         return year.toString() + semester;
     }
 }
