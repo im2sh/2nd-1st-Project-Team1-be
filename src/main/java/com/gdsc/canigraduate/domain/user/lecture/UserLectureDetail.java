@@ -50,8 +50,12 @@ public class UserLectureDetail {
     public void setType(String major) {
         if (major.equals("전공") || major.equals("전공필수"))
             this.userLectureType = UserLectureType.전공;
-        else if (major.equals("교양"))
+        else if (major.equals("교양") || major.equals("기본소양"))
             this.userLectureType = UserLectureType.교양;
+        else if (major.equals("공학전공"))
+            this.userLectureType = UserLectureType.공학전공;
+        else if(major.equals("전공기반"))
+            this.userLectureType = UserLectureType.전공기반;
         else
             this.userLectureType = UserLectureType.일반선택;
     }
@@ -61,6 +65,6 @@ public class UserLectureDetail {
     }
 
     public String YearToString(Integer year, String semester) {
-        return year.toString() + semester;
+        return year.toString() + " " + semester;
     }
 }

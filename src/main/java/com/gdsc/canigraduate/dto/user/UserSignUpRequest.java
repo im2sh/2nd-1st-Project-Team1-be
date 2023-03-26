@@ -1,5 +1,6 @@
 package com.gdsc.canigraduate.dto.user;
 
+import com.gdsc.canigraduate.domain.user.Department;
 import com.gdsc.canigraduate.domain.user.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -18,6 +19,8 @@ public class UserSignUpRequest {
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
 
+    private Department department;
+
     private String token;
 
     public User toEntity(){
@@ -25,6 +28,7 @@ public class UserSignUpRequest {
                 .name(name)
                 .classId(classId)
                 .userPw(userPw)
+                .department(department)
                 .token(UUID.randomUUID().toString()).build();
         return user;
     }

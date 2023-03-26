@@ -42,6 +42,6 @@ public class UserLectureDetailDTO {
     }
 
     public String YearToString(Integer year, String semester) {
-        return year.toString() + semester;
+        return year.toString() + " " + semester;
     }
 }
