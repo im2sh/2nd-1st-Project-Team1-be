@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-    private LocalDate admissionYear;
+    private Integer admissionYear;
 
     private Integer graduationCredit;
 
