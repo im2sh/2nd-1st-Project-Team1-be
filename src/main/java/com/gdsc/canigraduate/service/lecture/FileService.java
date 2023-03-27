@@ -46,19 +46,20 @@ public class FileService {
         DataFormatter formatter = new DataFormatter();
         for(int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++){
             Row row = worksheet.getRow(i);
+            if(row != null) {
+                ExcelData data = new ExcelData();
 
-            ExcelData data = new ExcelData();
+                data.setYear(Integer.valueOf(formatter.formatCellValue(row.getCell(0))));
+                data.setSemester(row.getCell(1).getStringCellValue());
+                data.setMajor(row.getCell(2).getStringCellValue());
+                data.setCode(row.getCell(3).getStringCellValue());
+                data.setLectureName(row.getCell(4).getStringCellValue());
+                data.setCredit(Integer.valueOf(formatter.formatCellValue(row.getCell(5))));
+                data.setGrade(row.getCell(6).getStringCellValue());
+                data.setScore(Double.valueOf(formatter.formatCellValue(row.getCell(7))));
 
-            data.setYear(Integer.valueOf(formatter.formatCellValue(row.getCell(0))));
-            data.setSemester(row.getCell(1).getStringCellValue());
-            data.setMajor(row.getCell(2).getStringCellValue());
-            data.setCode(row.getCell(3).getStringCellValue());
-            data.setLectureName(row.getCell(4).getStringCellValue());
-            data.setCredit(Integer.valueOf(formatter.formatCellValue(row.getCell(5))));
-            data.setGrade(row.getCell(6).getStringCellValue());
-            data.setScore(Double.valueOf(formatter.formatCellValue(row.getCell(7))));
-
-            dataList.add(data);
+                dataList.add(data);
+            }
         }
 
 

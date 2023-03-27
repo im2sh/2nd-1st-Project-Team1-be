@@ -7,6 +7,7 @@ import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import com.gdsc.canigraduate.repository.UserLectureDetailRepository;
 import com.gdsc.canigraduate.repository.UserLectureRepository;
 import com.gdsc.canigraduate.repository.UserRepository;
+import com.gdsc.canigraduate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class LectureService {
 
     private final UserLectureDetailRepository userLectureDetailRepository;
     private final UserRepository userRepository;
-
+    private final UserService userService;
 
     /**
      * 사용자 lecture 기입
@@ -35,30 +36,38 @@ public class LectureService {
     public Optional<UserLecture> findLectureByUser(User user) {
         return userLectureRepository.findById(user.getId());
     }
-
+    @Transactional
     public void dividedLecture(String token, List<UserLectureDetailDTO> dto){
         User user = userRepository.findUserByToken(token);
+        Integer credit = 0;
+        Integer totalCredit = 0;
+        Integer totalSemester = 0;
         for (UserLectureDetailDTO detail : dto) {
             UserLectureDetail userLectureDetail = detail.toEntity(detail);
             String s = detail.YearToString(detail.getYear(), detail.getSemester());
-
+            credit = detail.getCredit();
+            totalCredit += credit;
             if(userLectureRepository.findBySemester(s) == null){
-                UserLecture userLecture = new UserLecture(user);
+                totalSemester += 1;
+                UserLecture userLecture = new UserLecture(user, s);
                 userLecture.addUserLectureDetail(userLectureDetail);
-                userLecture.InitLecture(s);
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
+                userLecture.setCredit(credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
-                save(userLecture);
             }
             else{
                 UserLecture userLecture = userLectureRepository.findBySemester(s);
                 userLecture.addUserLectureDetail(userLectureDetail);
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
+                userLecture.setCredit(credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
             }
         }
+
+        user.setProfile(totalCredit, totalSemester);
+        userRepository.save(user);
 
     }
 }
