@@ -1,9 +1,8 @@
 package com.gdsc.canigraduate.dto.user;
 
-import com.gdsc.canigraduate.domain.user.Department;
+import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.User;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
