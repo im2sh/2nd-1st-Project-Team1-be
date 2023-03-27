@@ -1,4 +1,4 @@
-package com.gdsc.canigraduate.service.lecture;
+package com.gdsc.canigraduate.service.user.lecture;
 
 import static com.gdsc.canigraduate.util.ExcelUtils.isExcel;
 
