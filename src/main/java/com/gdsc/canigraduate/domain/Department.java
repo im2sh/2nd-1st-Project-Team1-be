@@ -1,4 +1,4 @@
-package com.gdsc.canigraduate.domain.user;
+package com.gdsc.canigraduate.domain;
 
 public enum Department {
     심화컴퓨터공학,
