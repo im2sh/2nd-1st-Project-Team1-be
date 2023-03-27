@@ -1,6 +1,7 @@
 package com.gdsc.canigraduate.domain.user;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
+import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import jakarta.persistence.*;
 import lombok.*;
