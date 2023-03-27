@@ -1,4 +1,4 @@
-package com.gdsc.canigraduate.service.lecture;
+package com.gdsc.canigraduate.service.user.lecture;
 
 import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class LectureService {
+public class UserLectureService {
     private final UserLectureRepository userLectureRepository;
 
     private final UserLectureDetailRepository userLectureDetailRepository;
