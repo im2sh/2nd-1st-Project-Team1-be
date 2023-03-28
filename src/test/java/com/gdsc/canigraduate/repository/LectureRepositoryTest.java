@@ -34,7 +34,7 @@ public class LectureRepositoryTest {
         //then
         Optional<User> user = userService.findOne(id);
         if (user.isPresent()) {
-            List<Lecture> lectures = lectureRepositoryCustom.findByUserUser(user.get());
+            List<Lecture> lectures = lectureRepositoryCustom.findByUser(user.get());
             lectures.forEach(lecture -> {
                 Assertions.assertThat(lecture.getLectureYear()).isEqualTo(
                         user.get().getAdmissionYear()
