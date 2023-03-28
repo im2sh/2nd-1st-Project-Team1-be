@@ -18,7 +18,7 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Lecture> findByUserUsingQuerydsl(User user) {
+    public List<Lecture> findByUserUser(User user) {
         QLecture qLecture = QLecture.lecture;
         QUser qUser = QUser.user;
 
