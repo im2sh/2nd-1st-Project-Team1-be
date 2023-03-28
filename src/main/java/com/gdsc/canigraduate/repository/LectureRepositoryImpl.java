@@ -4,7 +4,6 @@ import com.gdsc.canigraduate.domain.lecture.Lecture;
 import com.gdsc.canigraduate.domain.lecture.QLecture;
 import com.gdsc.canigraduate.domain.user.QUser;
 import com.gdsc.canigraduate.domain.user.User;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,6 +25,10 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
                 .where(
                         qLecture.lectureYear.eq(
                                 user.getAdmissionYear()
+                        ).and(
+                                qLecture.department.eq(
+                                        user.getDepartment()
+                                )
                         )
                 )
                 .fetch();
