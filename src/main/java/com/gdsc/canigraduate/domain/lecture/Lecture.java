@@ -1,6 +1,5 @@
 package com.gdsc.canigraduate.domain.lecture;
 
-import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.Department;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Lecture extends BaseEntity {
+public class Lecture{
 
     private String name;
 
