@@ -46,12 +46,13 @@ public class User extends BaseEntity {
     private Long id;
 
     @Builder
-    public User(String classId, String userPw, String name,String token, Department department) {
+    public User(String classId, String userPw, String name,String token, Department department, Integer admissionYear) {
         this.classId = classId;
         this.userPw = userPw;
         this.name = name;
         this.token = UUID.randomUUID().toString();
         this.department = department;
+        this.admissionYear = admissionYear;
     }
 
     public void pwUpdate(String pw) {

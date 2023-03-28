@@ -37,6 +37,7 @@ public class UserServiceTest {
         System.out.println(userSignUpRequest.getClassId());
 
         Assertions.assertThat(user.get().getClassId()).isEqualTo(userSignUpRequest.getClassId());
+        Assertions.assertThat(user.get().getAdmissionYear()).isEqualTo(2020);
     }
 
 }
