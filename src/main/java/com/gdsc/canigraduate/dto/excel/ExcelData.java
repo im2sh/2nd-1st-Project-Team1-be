@@ -1,10 +1,7 @@
 package com.gdsc.canigraduate.dto.excel;
 
-import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
 import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 public class ExcelData {
@@ -17,7 +14,7 @@ public class ExcelData {
     private String grade; //성적등급
     private Double score; //점수
 
-    public UserLectureDetailDTO toDetailDTO(ExcelData data){
+    public UserLectureDetailDTO toDetailDTO(ExcelData data) {
         UserLectureDetailDTO userLectureDetailDTO = UserLectureDetailDTO.builder()
                 .year(year)
                 .semester(semester)

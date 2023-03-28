@@ -6,7 +6,6 @@ import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,7 +45,7 @@ public class User extends BaseEntity {
     private Long id;
 
     @Builder
-    public User(String classId, String userPw, String name,String token, Department department, Integer admissionYear) {
+    public User(String classId, String userPw, String name, String token, Department department, Integer admissionYear) {
         this.classId = classId;
         this.userPw = userPw;
         this.name = name;
@@ -58,15 +57,16 @@ public class User extends BaseEntity {
     public void pwUpdate(String pw) {
         this.userPw = pw;
     }
-    public void setProfile(Integer credit, Integer semester){
+
+    public void setProfile(Integer credit, Integer semester) {
         this.presentCredit = credit;
         this.semester = semester;
     }
 
-    public void setDepartment(Department department){
-        if(department.equals("심화컴퓨터공학전공"))
+    public void setDepartment(Department department) {
+        if (department.equals("심화컴퓨터공학전공"))
             this.department = department;
-        else if(department.equals("글로벌SW융합전공"))
+        else if (department.equals("글로벌SW융합전공"))
             this.department = department;
     }
 }

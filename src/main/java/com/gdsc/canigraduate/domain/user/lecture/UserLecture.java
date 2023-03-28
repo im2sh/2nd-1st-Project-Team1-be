@@ -4,7 +4,6 @@ import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,7 +33,7 @@ public class UserLecture extends BaseEntity {
     private List<UserLectureDetail> lectureDetails = new ArrayList<>();
 
 
-    public UserLecture(User user, String semester){
+    public UserLecture(User user, String semester) {
         this.majorCredit = 0;
         this.cultureCredit = 0;
         this.normalCredit = 0;
@@ -42,20 +41,20 @@ public class UserLecture extends BaseEntity {
         this.semester = semester;
     }
 
-    public void YearToString(Integer year, String semester){
+    public void YearToString(Integer year, String semester) {
         this.semester = year.toString() + semester;
     }
 
-    public void addUserLectureDetail(UserLectureDetail userLectureDetail){
+    public void addUserLectureDetail(UserLectureDetail userLectureDetail) {
         lectureDetails.add(userLectureDetail);
     }
 
-    public void setCredit(Integer credit, UserLectureType type){
-        if(UserLectureType.전공.equals(type))
+    public void setCredit(Integer credit, UserLectureType type) {
+        if (UserLectureType.전공.equals(type))
             this.majorCredit += credit;
-        else if(UserLectureType.교양.equals(type))
+        else if (UserLectureType.교양.equals(type))
             this.cultureCredit += credit;
-        else if(UserLectureType.일반선택.equals(type))
+        else if (UserLectureType.일반선택.equals(type))
             this.normalCredit += credit;
     }
 }

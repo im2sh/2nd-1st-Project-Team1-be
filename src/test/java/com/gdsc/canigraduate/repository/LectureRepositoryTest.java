@@ -1,5 +1,6 @@
 package com.gdsc.canigraduate.repository;
 
+import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.lecture.Lecture;
 import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.dto.user.UserSignUpRequest;
@@ -22,12 +23,13 @@ public class LectureRepositoryTest {
     @Autowired private LectureRepositoryCustom lectureRepositoryCustom;
 
     @Test
-    void findByUserUsingQuerydslTest() {
+    void findByUserTest() {
         //given
         UserSignUpRequest userSignUpRequest = new UserSignUpRequest();
         userSignUpRequest.setClassId("2020118198");
         userSignUpRequest.setName("이석환");
         userSignUpRequest.setUserPw("1234");
+        userSignUpRequest.setDepartment(Department.심화컴퓨터공학);
         //when
         Long id = userService.join(userSignUpRequest);
 
@@ -36,8 +38,12 @@ public class LectureRepositoryTest {
         if (user.isPresent()) {
             List<Lecture> lectures = lectureRepositoryCustom.findByUser(user.get());
             lectures.forEach(lecture -> {
+                System.out.println("lecture = " + lecture.getName() + ", " + lecture.getDepartment() + ", " + lecture.getLectureYear());
                 Assertions.assertThat(lecture.getLectureYear()).isEqualTo(
                         user.get().getAdmissionYear()
+                );
+                Assertions.assertThat(lecture.getDepartment()).isEqualTo(
+                        user.get().getDepartment()
                 );
             });
         }
