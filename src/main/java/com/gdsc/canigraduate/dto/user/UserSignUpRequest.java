@@ -28,7 +28,9 @@ public class UserSignUpRequest {
                 .classId(classId)
                 .userPw(userPw)
                 .department(department)
-                .token(UUID.randomUUID().toString()).build();
+                .token(UUID.randomUUID().toString())
+                .admissionYear(Integer.valueOf(classId.substring(0, 4)))
+                .build();
         return user;
     }
 }

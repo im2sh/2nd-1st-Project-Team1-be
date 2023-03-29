@@ -1,3 +1,11 @@
 # Springboot use h2 db when `application.yml` is empty.
 # We use this when test code run.
 # This will be edited whenever we want.
+
+spring:
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    defer-datasource-initialization: true
