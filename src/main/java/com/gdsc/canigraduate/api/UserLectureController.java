@@ -3,9 +3,9 @@ package com.gdsc.canigraduate.api;
 import com.gdsc.canigraduate.dto.ResponseDto;
 import com.gdsc.canigraduate.dto.excel.ExcelData;
 import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
-import com.gdsc.canigraduate.service.lecture.FileService;
-import com.gdsc.canigraduate.service.lecture.LectureDetailService;
-import com.gdsc.canigraduate.service.lecture.LectureService;
+import com.gdsc.canigraduate.service.user.lecture.FileService;
+import com.gdsc.canigraduate.service.user.lecture.UserLectureDetailService;
+import com.gdsc.canigraduate.service.user.lecture.UserLectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,10 +20,10 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class LectureController {
+public class UserLectureController {
     private final FileService fileService;
-    private final LectureDetailService lectureDetailService;
-    private final LectureService lectureService;
+    private final UserLectureDetailService userLectureDetailService;
+    private final UserLectureService userLectureService;
 
     @PostMapping("excel/read/{token}")
     public ResponseEntity<ResponseDto> readExcel(@PathVariable("token") String token, @RequestParam("file")MultipartFile file) throws IOException {
@@ -34,7 +34,7 @@ public class LectureController {
             UserLectureDetailDTO detailDTO = excelData.toDetailDTO(excelData);
             details.add(detailDTO);
         }
-        lectureService.dividedLecture(token, details);
+        userLectureService.dividedLecture(token, details);
         return ResponseEntity.ok().body(new ResponseDto("엑셀파일이 업로드 되었습니다"));
     }
 

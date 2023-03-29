@@ -1,6 +1,4 @@
-package com.gdsc.canigraduate.service.lecture;
-
-import static com.gdsc.canigraduate.util.ExcelUtils.isExcel;
+package com.gdsc.canigraduate.service.user.lecture;
 
 import com.gdsc.canigraduate.dto.excel.ExcelData;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gdsc.canigraduate.util.ExcelUtils.isExcel;
+
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -29,24 +29,24 @@ public class FileService {
         List<ExcelData> dataList = new ArrayList<>();
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
-        if(!isExcel(detect, extension)){
+        if (!isExcel(detect, extension)) {
             throw new IOException("엑셀 파일이 아닙니다. 엑셀 파일만 업로드해주세요.");
         }
 
         Workbook workbook = null;
 
-        if(extension.equals("xlsx")){
+        if (extension.equals("xlsx")) {
             workbook = new XSSFWorkbook(file.getInputStream());
-        }else if(extension.equals("xls")){
+        } else if (extension.equals("xls")) {
             workbook = new HSSFWorkbook(file.getInputStream());
         }
 
         assert workbook != null;
         Sheet worksheet = workbook.getSheetAt(0);
         DataFormatter formatter = new DataFormatter();
-        for(int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++){
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row != null) {
+            if (row != null) {
                 ExcelData data = new ExcelData();
 
                 data.setYear(Integer.valueOf(formatter.formatCellValue(row.getCell(0))));
