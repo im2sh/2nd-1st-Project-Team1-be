@@ -47,3 +47,4 @@ application-server.yml
 
 ### server files ###
 nginx/
+db/

@@ -1,21 +1,15 @@
+server:
+  port: ${SPRING_PORT}
+
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /1stprojecttest # 콘솔의 경로
-  datasource:
-    driver-class-name: org.h2.Driver  #h2 드라이버 설정
-    url: jdbc:h2:tcp://localhost/~/1stprojecttest
-    username: sa
-    password:
-  jpa:
-    defer-datasource-initialization: true
-    hibernate.ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-  sql:
-    init:
-      mode: always
-  config:
-    import: application-swagger.yml
+  profiles:
+    active:
+      - local
+    group:
+      local:
+        - local
+      prod:
+        - prod
+    include:
+      - db
+      - swagger
