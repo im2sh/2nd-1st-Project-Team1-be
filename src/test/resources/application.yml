@@ -9,3 +9,6 @@ spring:
 
   jpa:
     defer-datasource-initialization: true
+
+  config:
+    import: application-swagger.yml
