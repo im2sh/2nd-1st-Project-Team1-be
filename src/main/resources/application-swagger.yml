@@ -1,0 +1,6 @@
+springdoc:
+  version: v1.0
+  title: Can I Graduate API 페이지
+  description: CIG API 설명 페이지입니다.
+  swagger-ui:
+    path: /api-docs
