@@ -1,0 +1,35 @@
+version: "3.7"
+
+networks:
+  nginx_network:
+    external: true
+
+services:
+  cig_spring:
+    container_name: cig_spring
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - ${SPRING_PORT}
+    environment:
+      PROFILE: ${SPRING_PROFILE}
+    depends_on:
+      - cig_mysql
+    restart: always
+    networks:
+      - default
+      - nginx_network
+
+  cig_mysql:
+    container_name: cig_mysql
+    image: mysql:8.0.31
+    expose:
+      - ${MYSQL_PORT}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - default
