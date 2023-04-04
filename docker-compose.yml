@@ -26,6 +26,7 @@ services:
     image: mysql:8.0.31
     expose:
       - ${MYSQL_PORT}
+    command: --lower_case_table_names=1
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
