@@ -2,6 +2,10 @@ package com.gdsc.canigraduate.dto.user;
 
 import lombok.Data;
 
+/**
+ * Created by im2sh
+ */
+
 @Data
 public class UserLoginResponse {
     private String classId;
