@@ -5,6 +5,9 @@ import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Created by im2sh
+ */
 @Data
 public class UserLectureDetailDTO {
     private Integer year; // 연도
