@@ -3,6 +3,10 @@ package com.gdsc.canigraduate.dto.user;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+/**
+ * Created by im2sh
+ */
+
 @Data
 public class UserPwModificationRequest {
     @NotBlank(message = "현재 비밀번호를 입력해주세요.")

@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Created by im2sh
+ */
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -68,7 +72,6 @@ public class UserLectureService {
 
         user.setProfile(totalCredit, totalSemester);
         userRepository.save(user);
-
     }
 }
 
