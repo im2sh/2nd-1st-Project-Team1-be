@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+/**
+ * Created by im2sh
+ */
+
 @Data
 @NoArgsConstructor
 public class UserSignUpRequest {
@@ -17,7 +21,6 @@ public class UserSignUpRequest {
     private String userPw;
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
-
     private Department department;
 
     private String token;

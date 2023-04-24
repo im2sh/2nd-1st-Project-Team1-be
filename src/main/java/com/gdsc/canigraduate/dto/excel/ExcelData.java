@@ -3,6 +3,10 @@ package com.gdsc.canigraduate.dto.excel;
 import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import lombok.Data;
 
+/**
+ * Created by im2sh
+ */
+
 @Data
 public class ExcelData {
     private Integer year; // 연도

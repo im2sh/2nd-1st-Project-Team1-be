@@ -3,6 +3,7 @@ package com.gdsc.canigraduate.api;
 import com.gdsc.canigraduate.dto.ResponseDto;
 import com.gdsc.canigraduate.dto.excel.ExcelData;
 import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
+import com.gdsc.canigraduate.service.user.UserService;
 import com.gdsc.canigraduate.service.user.lecture.FileService;
 import com.gdsc.canigraduate.service.user.lecture.UserLectureDetailService;
 import com.gdsc.canigraduate.service.user.lecture.UserLectureService;
@@ -18,10 +19,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by im2sh
+ */
+
 @Controller
 @RequiredArgsConstructor
 public class UserLectureController {
     private final FileService fileService;
+    private final UserService userService;
     private final UserLectureDetailService userLectureDetailService;
     private final UserLectureService userLectureService;
 
@@ -34,7 +40,9 @@ public class UserLectureController {
             UserLectureDetailDTO detailDTO = excelData.toDetailDTO(excelData);
             details.add(detailDTO);
         }
+
         userLectureService.dividedLecture(token, details);
+
         return ResponseEntity.ok().body(new ResponseDto("엑셀파일이 업로드 되었습니다"));
     }
 
