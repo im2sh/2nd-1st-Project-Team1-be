@@ -2,7 +2,7 @@ package com.gdsc.canigraduate.api;
 
 import com.gdsc.canigraduate.domain.user.SessionConst;
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.ResponseDto;
+import com.gdsc.canigraduate.dto.response.ResponseDto;
 import com.gdsc.canigraduate.dto.user.UserLoginRequest;
 import com.gdsc.canigraduate.dto.user.UserLoginResponse;
 import com.gdsc.canigraduate.dto.user.UserPwModificationRequest;
