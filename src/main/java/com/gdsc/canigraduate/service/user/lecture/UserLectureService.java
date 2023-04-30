@@ -37,6 +37,10 @@ public class UserLectureService {
         return userLectureRepository.save(userLecture).getId();
     }
 
+    public List<UserLecture> findAllByUserId(Long userId){
+        return userLectureRepository.findByUserId(userId);
+    }
+
     public Optional<UserLecture> findLectureByUser(User user) {
         return userLectureRepository.findById(user.getId());
     }

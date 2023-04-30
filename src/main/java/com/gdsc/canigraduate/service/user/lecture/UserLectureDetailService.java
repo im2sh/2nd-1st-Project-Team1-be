@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by im2sh
  */
@@ -19,5 +21,9 @@ public class UserLectureDetailService {
 
     public Long save(UserLectureDetail detail){
         return userLectureDetailRepository.save(detail).getId();
+    }
+
+    public List<UserLectureDetail> findAllByLectureID(Long lectureId){
+        return userLectureDetailRepository.findAllByUserLectureId(lectureId);
     }
 }
