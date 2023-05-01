@@ -5,7 +5,12 @@
 package com.gdsc.canigraduate.domain.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEnum;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
+@RequiredArgsConstructor
 public enum LectureSemester implements BaseEnum {
     FIRST("1학기"),
     SECOND("2학기"),
@@ -14,19 +19,18 @@ public enum LectureSemester implements BaseEnum {
     WINTER("겨울학기"),
     ;
 
+    @Getter
     private final String value;
 
-    LectureSemester(String value) {
-        this.value = value;
+    static public LectureSemester fromValue(String value) {
+        return Arrays.stream(LectureSemester.values())
+                .filter(semester -> semester.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(value + " semester는 존재하지 않습니다."));
     }
 
     @Override
     public String getKey() {
         return this.name();
-    }
-
-    @Override
-    public String getValue() {
-        return this.value;
     }
 }
