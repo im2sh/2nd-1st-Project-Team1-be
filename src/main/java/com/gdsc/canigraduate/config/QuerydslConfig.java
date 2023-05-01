@@ -1,3 +1,7 @@
+/**
+ * Author: 박기현 (kiryanchi)
+ */
+
 package com.gdsc.canigraduate.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
