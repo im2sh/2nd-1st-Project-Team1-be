@@ -1,4 +1,4 @@
-package com.gdsc.canigraduate.dto;
+package com.gdsc.canigraduate.dto.response;
 
 import lombok.Data;
 
