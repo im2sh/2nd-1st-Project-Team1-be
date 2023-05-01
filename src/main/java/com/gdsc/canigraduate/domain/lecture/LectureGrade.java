@@ -5,7 +5,10 @@
 package com.gdsc.canigraduate.domain.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEnum;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public enum LectureGrade implements BaseEnum {
     FIRST("1학년"),
     SECOND("2학년"),
@@ -14,19 +17,11 @@ public enum LectureGrade implements BaseEnum {
     ALL("전학년"),
     ;
 
+    @Getter
     private final String value;
-
-    LectureGrade(String value) {
-        this.value = value;
-    }
 
     @Override
     public String getKey() {
         return this.name();
-    }
-
-    @Override
-    public String getValue() {
-        return this.value;
     }
 }
