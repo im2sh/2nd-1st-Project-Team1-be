@@ -5,7 +5,7 @@ package com.gdsc.canigraduate.api;
 
 import com.gdsc.canigraduate.domain.lecture.Lecture;
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.ResponseDto;
+import com.gdsc.canigraduate.dto.response.ResponseDto;
 import com.gdsc.canigraduate.dto.lecture.LectureDto;
 import com.gdsc.canigraduate.service.lecture.LectureService;
 import com.gdsc.canigraduate.service.user.UserService;

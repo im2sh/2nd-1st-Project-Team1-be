@@ -2,6 +2,7 @@ package com.gdsc.canigraduate.domain.user.lecture;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.user.User;
+import com.gdsc.canigraduate.dto.response.UserLectureResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -60,5 +61,14 @@ public class UserLecture extends BaseEntity {
             this.cultureCredit += credit;
         else if (UserLectureType.일반선택.equals(type))
             this.normalCredit += credit;
+    }
+
+    public UserLectureResponse toResponse(){
+        semester = this.semester;
+        Integer major = this.majorCredit;
+        Integer culture = this.cultureCredit;
+        Integer normal = this.normalCredit;
+        UserLectureResponse userLectureResponse = new UserLectureResponse(semester, major, culture, normal);
+        return userLectureResponse;
     }
 }

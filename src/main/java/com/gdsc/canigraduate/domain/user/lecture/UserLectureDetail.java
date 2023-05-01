@@ -1,5 +1,6 @@
 package com.gdsc.canigraduate.domain.user.lecture;
 
+import com.gdsc.canigraduate.dto.response.UserLectureDetailResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,5 +71,18 @@ public class UserLectureDetail {
 
     public String YearToString(Integer year, String semester) {
         return year.toString() + " " + semester;
+    }
+
+    public UserLectureDetailResponse toResponse(){
+        Integer lectureYear = getLectureYear(); // 연도
+        String semester =getSemester();
+        String major = getMajor(); // 교과목 구분
+        String code = getCode();// 교과목코드
+        String lectureName = getLectureName(); //교과목명
+        Integer credit = getCredit(); // 학점
+        String grade = getGrade(); //성적등급
+        Double score = getScore(); //점수
+
+        return new UserLectureDetailResponse(lectureYear, semester, major, code, lectureName, credit, grade, score);
     }
 }
