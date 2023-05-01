@@ -1,3 +1,6 @@
+/**
+ * Author: 박기현 (kiryanchi)
+ */
 package com.gdsc.canigraduate.api;
 
 import com.gdsc.canigraduate.domain.lecture.Lecture;

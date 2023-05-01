@@ -1,3 +1,7 @@
+/**
+ * Author: 박기현 (kiryanchi)
+ */
+
 package com.gdsc.canigraduate.config;
 
 import io.swagger.v3.oas.models.Components;

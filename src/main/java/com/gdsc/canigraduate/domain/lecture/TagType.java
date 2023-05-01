@@ -1,3 +1,7 @@
+/**
+ * Author: 박기현 (kiryanchi)
+ */
+
 package com.gdsc.canigraduate.domain.lecture;
 
 public enum TagType {

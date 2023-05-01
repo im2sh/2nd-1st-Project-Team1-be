@@ -1,3 +1,7 @@
+/**
+ * Author: 박기현 (kiryanchi)
+ */
+
 package com.gdsc.canigraduate.domain.lecture;
 
 import com.gdsc.canigraduate.domain.Department;
@@ -9,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Lecture{
+public class Lecture {
 
     private String name;
 
