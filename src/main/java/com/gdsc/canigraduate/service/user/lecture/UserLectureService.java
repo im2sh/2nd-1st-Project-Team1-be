@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,12 +51,15 @@ public class UserLectureService {
         Integer credit = 0;
         Integer totalCredit = 0;
         Integer totalSemester = 0;
+        List<UserLecture> userLectureList = new ArrayList<>();
+
         for (UserLectureDetailDTO detail : dto) {
             UserLectureDetail userLectureDetail = detail.toEntity(detail);
             String s = detail.YearToString(detail.getYear(), detail.getSemester());
             credit = detail.getCredit();
             totalCredit += credit;
-            if(userLectureRepository.findBySemester(s) == null){
+            List<UserLecture> allByUserId = findAllByUserId(user.getId());
+            if(userLectureRepository.findBySemesterAndUserId(s, user.getId()) == null){
                 totalSemester += 1;
                 UserLecture userLecture = new UserLecture(user, s);
                 userLecture.addUserLectureDetail(userLectureDetail);
@@ -65,7 +69,7 @@ public class UserLectureService {
                 userLectureDetailRepository.save(userLectureDetail);
             }
             else{
-                UserLecture userLecture = userLectureRepository.findBySemester(s);
+                UserLecture userLecture = userLectureRepository.findBySemesterAndUserId(s, user.getId());
                 userLecture.addUserLectureDetail(userLectureDetail);
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
