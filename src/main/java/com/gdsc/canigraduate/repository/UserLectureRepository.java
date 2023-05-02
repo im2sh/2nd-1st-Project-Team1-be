@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface UserLectureRepository extends JpaRepository<UserLecture, Long> {
-    UserLecture findBySemester(String semester);
+    UserLecture findBySemesterAndUserId(String semester, Long userId);
 
     List<UserLecture> findByUserId(Long userId);
 

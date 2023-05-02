@@ -67,6 +67,14 @@ public class User extends BaseEntity {
         this.semester = semester;
     }
 
+    public void setLecture(UserLecture userLecture){
+        this.userLectureList.add(userLecture);
+    }
+
+    public void setLectureList(List<UserLecture> userLectureList){
+        this.userLectureList = userLectureList;
+    }
+
     public void setDepartment(Department department) {
         if (department.equals("심화컴퓨터공학전공"))
             this.department = department;
