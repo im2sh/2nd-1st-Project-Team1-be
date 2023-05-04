@@ -34,7 +34,7 @@ public class UserLecture extends BaseEntity {
     private Integer cultureCredit;
     private Integer normalCredit;
 
-    @OneToMany(mappedBy = "userLecture", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userLecture", cascade = CascadeType.PERSIST)
     private List<UserLectureDetail> lectureDetails = new ArrayList<>();
 
 
@@ -63,12 +63,23 @@ public class UserLecture extends BaseEntity {
             this.normalCredit += credit;
     }
 
+    public void subCredit(Integer credit, UserLectureType type){
+        if (UserLectureType.전공.equals(type) || UserLectureType.공학전공.equals(type) || UserLectureType.전공기반.equals(type))
+            this.majorCredit -= credit;
+        else if (UserLectureType.교양.equals(type))
+            this.cultureCredit -= credit;
+        else if (UserLectureType.일반선택.equals(type))
+            this.normalCredit -= credit;
+    }
+
     public UserLectureResponse toResponse(){
-        semester = this.semester;
+        String semester = this.semester;
         Integer major = this.majorCredit;
         Integer culture = this.cultureCredit;
         Integer normal = this.normalCredit;
         UserLectureResponse userLectureResponse = new UserLectureResponse(semester, major, culture, normal);
         return userLectureResponse;
     }
+
+
 }

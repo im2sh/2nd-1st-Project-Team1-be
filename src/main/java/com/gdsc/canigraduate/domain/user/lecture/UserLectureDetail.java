@@ -22,7 +22,7 @@ public class UserLectureDetail {
     @Column(name = "DETAIL_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "LECTURE_ID")
     private UserLecture userLecture;
 
