@@ -45,13 +45,16 @@ public class UserLectureService {
     public Optional<UserLecture> findLectureByUser(User user) {
         return userLectureRepository.findById(user.getId());
     }
+
+//    public UserLecture findUserLectureByDetail(Long id){
+//        return userLectureRepository.findByLectureId(id);
+//    }
     @Transactional
     public void dividedLecture(String token, List<UserLectureDetailDTO> dto){
         User user = userRepository.findUserByToken(token);
         Integer credit = 0;
         Integer totalCredit = 0;
         Integer totalSemester = 0;
-        List<UserLecture> userLectureList = new ArrayList<>();
 
         for (UserLectureDetailDTO detail : dto) {
             UserLectureDetail userLectureDetail = detail.toEntity(detail);
@@ -59,6 +62,7 @@ public class UserLectureService {
             credit = detail.getCredit();
             totalCredit += credit;
             List<UserLecture> allByUserId = findAllByUserId(user.getId());
+
             if(userLectureRepository.findBySemesterAndUserId(s, user.getId()) == null){
                 totalSemester += 1;
                 UserLecture userLecture = new UserLecture(user, s);
@@ -79,7 +83,40 @@ public class UserLectureService {
         }
 
         user.setProfile(totalCredit, totalSemester);
+        user.userUpload(true);
         userRepository.save(user);
+    }
+
+    public void delete_all_detail(Long userLectureId){
+        userLectureDetailRepository.deleteAllByUserLectureId(userLectureId);
+    }
+
+    public void delete_all_lecture(Long userId){
+        userLectureRepository.deleteAllByUserId(userId);
+    }
+    @Transactional
+    public void lecture_delete(User user){
+        System.out.println("================전체 삭제 Test===================");
+        List<UserLecture> userLectures = findAllByUserId(user.getId());
+        for (UserLecture userLecture : userLectures) {
+            List<UserLectureDetail> userLectureDetails = userLectureDetailRepository.findAllByUserLectureId(userLecture.getId());
+            for (UserLectureDetail userLectureDetail : userLectureDetails) {
+                userLectureDetailRepository.deleteById(userLectureDetail.getId());
+            }
+            userLectureRepository.deleteById(userLecture.getId());
+        }
+
+//        List<UserLecture> userLectures = findAllByUserId(user.getId());
+//        for (UserLecture userLecture : userLectures) {
+//            delete_all_detail(userLecture.getId());
+//        }
+//        delete_all_lecture(user.getId());
+        user.userUpload(false);
+        System.out.println("================전체 삭제 Test===================");
+    }
+
+    public UserLecture findByDetail(Long id){
+        return userLectureRepository.findOneById(id);
     }
 }
 
