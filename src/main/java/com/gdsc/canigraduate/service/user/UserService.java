@@ -1,6 +1,7 @@
 package com.gdsc.canigraduate.service.user;
 
 import com.gdsc.canigraduate.domain.user.User;
+import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.dto.user.UserPwModificationRequest;
 import com.gdsc.canigraduate.dto.user.UserSignUpRequest;
 import com.gdsc.canigraduate.exception.IncorrectPassword;
@@ -31,6 +32,12 @@ public class UserService {
         return user.getId();
     }
 
+    @Transactional
+    public Long save(User user){
+        userRepository.save(user);
+        return user.getId();
+    }
+
     private void validateDuplicateMember(User user){
         List<User> findUser = userRepository.findAllByClassId(user.getClassId());
         if(!findUser.isEmpty()){
@@ -45,6 +52,10 @@ public class UserService {
     public Optional<User> findOne(Long id){
         return userRepository.findById(id);
     }
+
+    public List<UserLecture> findUserLectureListByUserId(Long userId){
+        return userRepository.findUserLectureListById(userId);
+    };
 
     public User findByClassId(String classId){
         List<User> users = userRepository.findAllByClassId(classId);
@@ -73,5 +84,11 @@ public class UserService {
             user.pwUpdate(request.getUpdateUserPw());
         }
     }
+
+    @Transactional
+    public void deleteAllUserLecture(Long userId){
+        userRepository.deleteAllULById(userId);
+    }
+
 
 }

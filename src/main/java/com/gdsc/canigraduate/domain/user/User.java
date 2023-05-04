@@ -1,6 +1,7 @@
 package com.gdsc.canigraduate.domain.user;
 
 import com.gdsc.canigraduate.domain.BaseEntity;
+import com.gdsc.canigraduate.domain.BooleanToYNConverter;
 import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import jakarta.persistence.*;
@@ -40,7 +41,9 @@ public class User extends BaseEntity {
 
     private String token;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean isUpload;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<UserLecture> userLectureList = new ArrayList<>();
 
     @Id
@@ -71,14 +74,22 @@ public class User extends BaseEntity {
         this.userLectureList.add(userLecture);
     }
 
-    public void setLectureList(List<UserLecture> userLectureList){
-        this.userLectureList = userLectureList;
-    }
 
     public void setDepartment(Department department) {
         if (department.equals("심화컴퓨터공학전공"))
             this.department = department;
         else if (department.equals("글로벌SW융합전공"))
             this.department = department;
+    }
+
+    public void userUpload(boolean yn){
+        if(yn == true)
+            this.isUpload = true;
+        else
+            this.isUpload = false;
+    }
+
+    public void subCredit(Integer credit){
+        this.presentCredit -= credit;
     }
 }
