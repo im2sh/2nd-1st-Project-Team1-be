@@ -1,12 +1,13 @@
 /**
  * Author: 박기현 (kiryanchi)
  */
+
 package com.gdsc.canigraduate.api;
 
-import com.gdsc.canigraduate.domain.lecture.Lecture;
 import com.gdsc.canigraduate.domain.user.User;
-import com.gdsc.canigraduate.dto.response.ResponseDto;
 import com.gdsc.canigraduate.dto.lecture.LectureDto;
+import com.gdsc.canigraduate.dto.lecture.LectureSearchParams;
+import com.gdsc.canigraduate.dto.response.ResponseDto;
 import com.gdsc.canigraduate.service.lecture.LectureService;
 import com.gdsc.canigraduate.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Tag(name = "Lecture", description = "Lecture 관련 API 입니다.")
 @RestController
@@ -37,12 +37,12 @@ public class LectureApiController {
     private final LectureService lectureService;
 
     @Operation(
-            summary = "모든 강의 조희",
-            description = "연도, 학과에 상관없이 모든 강의를 가져옵니다."
+            summary = "강의 조희",
+            description = "조건에 맞는 모든 강의를 가져옵니다."
     )
     @ApiResponse(
             responseCode = "200",
-            description = "모든 강의를 가져옵니다.",
+            description = "조건에 맞는 모든 강의를 가져옵니다.",
             content = {
                     @Content(
                             mediaType = "application/json",
@@ -75,12 +75,11 @@ public class LectureApiController {
             }
     )
     @GetMapping("/lectures")
-    public ResponseEntity<List<LectureDto>> getAllLectures() {
-        List<Lecture> lectures = lectureService.findAll();
-
-        List<LectureDto> body = lectures.stream()
+    public ResponseEntity<List<LectureDto>> getLectures(LectureSearchParams searchParams) {
+        System.out.println("searchParams = " + searchParams);
+        List<LectureDto> body = lectureService.findSearchedLecture(searchParams).stream()
                 .map(LectureDto::new)
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok().body(body);
     }
@@ -89,7 +88,7 @@ public class LectureApiController {
             summary = "유저에 해당하는 강의 조회",
             description = "유저의 입학년도, 학과에 맞는 강의를 가져옵니다."
     )
-    @Parameter(name = "id", description = "유저의 학번", required = true)
+    @Parameter(name = "id", description = "유저의 학번", required = true, example = "2017112387")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -145,5 +144,4 @@ public class LectureApiController {
             return ResponseEntity.ok().body(lectureService.findByUser(user.get()));
         return ResponseEntity.badRequest().body(new ResponseDto("올바른 학번이 아닙니다."));
     }
-
 }
