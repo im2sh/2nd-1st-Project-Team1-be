@@ -13,7 +13,7 @@ public class LectureDto {
     private String name;
     private String code;
     private String type;
-    private String year;
+    private String lectureYear;
     private String semester;
     private String credit;
     private Boolean required;
@@ -23,7 +23,7 @@ public class LectureDto {
         this.name = lecture.getName();
         this.code = lecture.getCode();
         this.type = lecture.getType().getValue();
-        this.year = lecture.getGrade().getValue();
+        this.lectureYear = lecture.getGrade().getValue();
         this.semester = lecture.getSemester().getValue();
         this.credit = lecture.getCredit().getValue();
         this.required = lecture.getRequired();
