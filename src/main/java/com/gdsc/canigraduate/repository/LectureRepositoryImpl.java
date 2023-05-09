@@ -42,7 +42,7 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
     public List<Lecture> findBySearch(LectureSearchParams searchParams) {
         return jpaQueryFactory.selectFrom(lecture)
                 .where(
-                        eqName(searchParams.getName()),
+                        containName(searchParams.getName()),
                         eqCode(searchParams.getCode()),
                         eqLectureYear(searchParams.getLectureYear()),
                         eqCredit(searchParams.getCredit()),
@@ -55,8 +55,8 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
                 .fetch();
     }
 
-    private BooleanExpression eqName(String name) {
-        return isValue(name) ? lecture.name.eq(name) : null;
+    private BooleanExpression containName(String name) {
+        return isValue(name) ? lecture.name.contains(name) : null;
     }
 
     private BooleanExpression eqCode(String code) {
