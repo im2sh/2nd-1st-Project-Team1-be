@@ -70,7 +70,7 @@ public class User extends BaseEntity {
         this.semester = semester;
     }
 
-    public void setLecture(UserLecture userLecture){
+    public void addLecture(UserLecture userLecture){
         this.userLectureList.add(userLecture);
     }
 
@@ -91,5 +91,8 @@ public class User extends BaseEntity {
 
     public void subCredit(Integer credit){
         this.presentCredit -= credit;
+    }
+    public void addCredit(Integer credit){
+        this.presentCredit += credit;
     }
 }

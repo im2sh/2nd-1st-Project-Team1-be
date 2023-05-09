@@ -19,6 +19,10 @@ public class UserLectureDetailDTO {
     private String grade; //성적등급
     private Double score; //점수
 
+    public UserLectureDetailDTO(){
+
+    }
+
     @Builder
     public UserLectureDetailDTO(Integer year, String semester, String major, String code, String lectureName, Integer credit, String grade, Double score, UserLecture userLecture) {
         this.year = year;

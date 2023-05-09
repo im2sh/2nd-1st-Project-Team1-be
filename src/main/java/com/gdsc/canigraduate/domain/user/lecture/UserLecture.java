@@ -54,7 +54,7 @@ public class UserLecture extends BaseEntity {
         lectureDetails.add(userLectureDetail);
     }
 
-    public void setCredit(Integer credit, UserLectureType type) {
+    public void addCredit(Integer credit, UserLectureType type) {
         if (UserLectureType.전공.equals(type) || UserLectureType.공학전공.equals(type) || UserLectureType.전공기반.equals(type))
             this.majorCredit += credit;
         else if (UserLectureType.교양.equals(type))
