@@ -3,6 +3,7 @@ package com.gdsc.canigraduate.service.user.lecture;
 import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
+import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import com.gdsc.canigraduate.repository.UserLectureDetailRepository;
 import com.gdsc.canigraduate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,6 @@ public class UserLectureDetailService {
 
     @Transactional
     public boolean delete_one(Long detailId){
-        System.out.println("------------------------delete Test------------------------");
         Optional<UserLectureDetail> detail = userLectureDetailRepository.findById(detailId);
         if(detail == null)
             return false;
@@ -48,9 +48,31 @@ public class UserLectureDetailService {
         User user = one.get();
         user.subCredit(lectureDetail.getCredit());
         userLectureDetailRepository.deleteById(lectureDetail.getId());
-        System.out.println(lectureDetail.getId());
-        System.out.println("------------------------delete Test------------------------");
         return true;
     }
 
+    @Transactional
+    public void add_one(UserLectureDetailDTO dto, User user){
+        UserLectureDetail detail = dto.toEntity(dto);
+        String s = detail.YearToString(detail.getLectureYear(), detail.getSemester());
+        Integer credit = detail.getCredit();
+
+        if(userLectureService.findLectureBySemesterAndUserId(s, user.getId()) == null){
+            UserLecture userLecture = new UserLecture(user, s);
+            userLecture.addUserLectureDetail(detail);
+            detail.setUserLecture(userLecture);
+            detail.setType(detail.getMajor());
+            userLecture.addCredit(credit, detail.getUserLectureType());
+            save(detail);
+        }
+        else{
+            UserLecture userLecture = userLectureService.findLectureBySemesterAndUserId(s, user.getId());
+            userLecture.addUserLectureDetail(detail);
+            detail.setUserLecture(userLecture);
+            detail.setType(detail.getMajor());
+            userLecture.addCredit(credit,detail.getUserLectureType());
+            save(detail);
+        }
+
+    }
 }
