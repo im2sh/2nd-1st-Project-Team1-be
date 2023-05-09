@@ -15,10 +15,7 @@ import com.gdsc.canigraduate.service.user.lecture.UserLectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -104,6 +101,17 @@ public class UserLectureController {
         if(!userLectureDetailService.delete_one(id))
             return ResponseEntity.badRequest().body(new ResponseDto("삭제 실패"));
         return ResponseEntity.ok().body(new ResponseDto("삭제 성공"));
+    }
+
+    @PostMapping("/userLecture/add/{token}")
+    public ResponseEntity<ResponseDto> add_one_userLecture(@PathVariable("token")String token, @RequestBody UserLectureDetailDTO dto){
+        Optional<User> one = Optional.ofNullable(userService.findByToken(token));
+        User user = one.get();
+        if(user == null){
+            throw new IllegalStateException("존재하지 않는 회원입니다.");
+        }
+        userLectureDetailService.add_one(dto,user);
+        return ResponseEntity.ok().body(new ResponseDto("수업 추가"));
     }
 
 }
