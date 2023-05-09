@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +44,12 @@ public class UserLectureService {
     public Optional<UserLecture> findLectureByUser(User user) {
         return userLectureRepository.findById(user.getId());
     }
-
+    public void delete_one(UserLecture userLecture){
+        userLectureRepository.delete(userLecture);
+    }
+    public UserLecture findLectureBySemesterAndUserId(String semester, Long id){
+        return userLectureRepository.findBySemesterAndUserId(semester,id);
+    }
 //    public UserLecture findUserLectureByDetail(Long id){
 //        return userLectureRepository.findByLectureId(id);
 //    }
@@ -61,7 +65,6 @@ public class UserLectureService {
             String s = detail.YearToString(detail.getYear(), detail.getSemester());
             credit = detail.getCredit();
             totalCredit += credit;
-            List<UserLecture> allByUserId = findAllByUserId(user.getId());
 
             if(userLectureRepository.findBySemesterAndUserId(s, user.getId()) == null){
                 totalSemester += 1;
@@ -69,15 +72,15 @@ public class UserLectureService {
                 userLecture.addUserLectureDetail(userLectureDetail);
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
-                userLecture.setCredit(credit, userLectureDetail.getUserLectureType());
+                userLecture.addCredit(credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
             }
             else{
-                UserLecture userLecture = userLectureRepository.findBySemesterAndUserId(s, user.getId());
+                UserLecture userLecture = findLectureBySemesterAndUserId(s, user.getId());
                 userLecture.addUserLectureDetail(userLectureDetail);
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
-                userLecture.setCredit(credit, userLectureDetail.getUserLectureType());
+                userLecture.addCredit(credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
             }
         }
