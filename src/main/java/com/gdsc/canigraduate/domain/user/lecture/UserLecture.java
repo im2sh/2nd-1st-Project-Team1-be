@@ -25,7 +25,7 @@ public class UserLecture extends BaseEntity {
     @Column(name = "LECTURE_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")
     private User user;
 
@@ -34,7 +34,7 @@ public class UserLecture extends BaseEntity {
     private Integer cultureCredit;
     private Integer normalCredit;
 
-    @OneToMany(mappedBy = "userLecture", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "userLecture", cascade = CascadeType.ALL)
     private List<UserLectureDetail> lectureDetails = new ArrayList<>();
 
 
@@ -80,6 +80,5 @@ public class UserLecture extends BaseEntity {
         UserLectureResponse userLectureResponse = new UserLectureResponse(semester, major, culture, normal);
         return userLectureResponse;
     }
-
 
 }
