@@ -43,7 +43,7 @@ public class User extends BaseEntity {
 
     @Convert(converter = BooleanToYNConverter.class)
     private boolean isUpload;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserLecture> userLectureList = new ArrayList<>();
 
     @Id
@@ -94,5 +94,13 @@ public class User extends BaseEntity {
     }
     public void addCredit(Integer credit){
         this.presentCredit += credit;
+    }
+
+    public void addSemester(Integer semester){
+        this.semester += semester;
+    }
+
+    public void subSemester(Integer semester){
+        this.semester -= semester;
     }
 }

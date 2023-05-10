@@ -24,4 +24,6 @@ public interface UserLectureRepository extends JpaRepository<UserLecture, Long> 
     List<UserLecture> deleteAllByUserId(Long userId);
 
     UserLecture findOneById(Long id);
+
+
 }
