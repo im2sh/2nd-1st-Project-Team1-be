@@ -5,6 +5,7 @@ import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
 import com.gdsc.canigraduate.dto.userLecture.UserLectureDetailDTO;
 import com.gdsc.canigraduate.repository.UserLectureDetailRepository;
+import com.gdsc.canigraduate.repository.UserLectureRepository;
 import com.gdsc.canigraduate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class UserLectureDetailService {
 
     private final UserLectureDetailRepository userLectureDetailRepository;
     private final UserLectureService userLectureService;
+    private final UserLectureRepository userLectureRepository;
     private final UserService userService;
 
     public Long save(UserLectureDetail detail){
@@ -34,6 +36,10 @@ public class UserLectureDetailService {
         return userLectureDetailRepository.findAllByUserLectureId(lectureId);
     }
 
+
+    public void deleteByLectureDetail(UserLectureDetail userLectureDetail){
+        userLectureDetailRepository.delete(userLectureDetail);
+    }
     @Transactional
     public boolean delete_one(Long detailId){
         Optional<UserLectureDetail> detail = userLectureDetailRepository.findById(detailId);
@@ -47,7 +53,11 @@ public class UserLectureDetailService {
             return false;
         User user = one.get();
         user.subCredit(lectureDetail.getCredit());
-        userLectureDetailRepository.deleteById(lectureDetail.getId());
+        if(userLecture.getMajorCredit() == 0 && userLecture.getCultureCredit() == 0 && userLecture.getNormalCredit() == 0) {
+            userLectureRepository.delete(userLecture);
+            user.subSemester(1);
+        }
+        deleteByLectureDetail(lectureDetail);
         return true;
     }
 
@@ -63,6 +73,7 @@ public class UserLectureDetailService {
             detail.setUserLecture(userLecture);
             detail.setType(detail.getMajor());
             userLecture.addCredit(credit, detail.getUserLectureType());
+            user.addSemester(1);
             save(detail);
         }
         else{
@@ -73,6 +84,6 @@ public class UserLectureDetailService {
             userLecture.addCredit(credit,detail.getUserLectureType());
             save(detail);
         }
-
+        user.addCredit(credit);
     }
 }
