@@ -16,4 +16,6 @@ public interface UserLectureDetailRepository extends JpaRepository<UserLectureDe
     List<UserLectureDetail> deleteAllByUserLectureId(Long id);
 
     Optional<UserLectureDetail> findById(Long id);
+
+
 }

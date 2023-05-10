@@ -44,9 +44,7 @@ public class UserLectureService {
     public Optional<UserLecture> findLectureByUser(User user) {
         return userLectureRepository.findById(user.getId());
     }
-    public void delete_one(UserLecture userLecture){
-        userLectureRepository.delete(userLecture);
-    }
+
     public UserLecture findLectureBySemesterAndUserId(String semester, Long id){
         return userLectureRepository.findBySemesterAndUserId(semester,id);
     }
@@ -90,32 +88,30 @@ public class UserLectureService {
         userRepository.save(user);
     }
 
-    public void delete_all_detail(Long userLectureId){
-        userLectureDetailRepository.deleteAllByUserLectureId(userLectureId);
-    }
 
+    public void deleteByLecture(UserLecture userLecture){
+        userLectureRepository.delete(userLecture);
+    }
     public void delete_all_lecture(Long userId){
         userLectureRepository.deleteAllByUserId(userId);
     }
     @Transactional
     public void lecture_delete(User user){
-        System.out.println("================전체 삭제 Test===================");
+        Integer totalCredit = 0;
+        Integer totalSemester = 0;
         List<UserLecture> userLectures = findAllByUserId(user.getId());
         for (UserLecture userLecture : userLectures) {
             List<UserLectureDetail> userLectureDetails = userLectureDetailRepository.findAllByUserLectureId(userLecture.getId());
+            totalSemester+=1;
             for (UserLectureDetail userLectureDetail : userLectureDetails) {
-                userLectureDetailRepository.deleteById(userLectureDetail.getId());
+                totalCredit += userLectureDetail.getCredit();
+                userLectureDetailRepository.delete(userLectureDetail);
             }
-            userLectureRepository.deleteById(userLecture.getId());
+            deleteByLecture(userLecture);
         }
-
-//        List<UserLecture> userLectures = findAllByUserId(user.getId());
-//        for (UserLecture userLecture : userLectures) {
-//            delete_all_detail(userLecture.getId());
-//        }
-//        delete_all_lecture(user.getId());
+        user.subSemester(totalSemester);
+        user.subCredit(totalCredit);
         user.userUpload(false);
-        System.out.println("================전체 삭제 Test===================");
     }
 
     public UserLecture findByDetail(Long id){
