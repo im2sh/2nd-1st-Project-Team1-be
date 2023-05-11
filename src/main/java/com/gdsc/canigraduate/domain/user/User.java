@@ -5,6 +5,8 @@ import com.gdsc.canigraduate.domain.BooleanToYNConverter;
 import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureType;
+import com.gdsc.canigraduate.dto.response.UserLectureResponse;
+import com.gdsc.canigraduate.dto.user.UserCreditResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,6 +50,11 @@ public class User extends BaseEntity {
     @Convert(converter = BooleanToYNConverter.class)
     private boolean isGraduation;
 
+    private Integer majorCredit;
+    private Integer cultureCredit;
+    private Integer normalCredit;
+    private Integer basicMajorCredit;
+    private Integer techMajorCredit;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserLecture> userLectureList = new ArrayList<>();
@@ -65,6 +72,11 @@ public class User extends BaseEntity {
         this.token = UUID.randomUUID().toString();
         this.department = department;
         this.admissionYear = admissionYear;
+        this.majorCredit = 0;
+        this.cultureCredit = 0;
+        this.normalCredit = 0;
+        this.basicMajorCredit = 0;
+        this.techMajorCredit = 0;
     }
 
     public void pwUpdate(String pw) {
@@ -110,6 +122,32 @@ public class User extends BaseEntity {
         this.semester -= semester;
     }
 
+    public void addDetailCredit(Integer credit, UserLectureType type){
+        if(UserLectureType.전공.equals(type))
+            this.majorCredit += credit;
+        else if(UserLectureType.전공기반.equals(type))
+            this.basicMajorCredit += credit;
+        else if(UserLectureType.공학전공.equals(type))
+            this.techMajorCredit += credit;
+        else if(UserLectureType.교양.equals(type))
+            this.cultureCredit += credit;
+        else if(UserLectureType.일반선택.equals(type))
+            this.normalCredit += credit;
+    }
+
+    public void subDetailCredit(Integer credit, UserLectureType type){
+        if(UserLectureType.전공.equals(type))
+            this.majorCredit -= credit;
+        else if(UserLectureType.전공기반.equals(type))
+            this.basicMajorCredit -= credit;
+        else if(UserLectureType.공학전공.equals(type))
+            this.techMajorCredit -= credit;
+        else if(UserLectureType.교양.equals(type))
+            this.cultureCredit -= credit;
+        else if(UserLectureType.일반선택.equals(type))
+            this.normalCredit -= credit;
+    }
+
     public void userGraduation(boolean yn){
         if(yn == true)
             this.isGraduation = true;
@@ -135,5 +173,20 @@ public class User extends BaseEntity {
             return UserLectureType.교양;
         return null;
     }
-
+    public void InitCredit() {
+        this.majorCredit = 0;
+        this.cultureCredit = 0;
+        this.normalCredit = 0;
+        this.basicMajorCredit = 0;
+        this.techMajorCredit = 0;
+    }
+    public UserCreditResponse toCreditResponse(){
+        Integer majorCredit = getMajorCredit();
+        Integer cultureCredit = getCultureCredit();
+        Integer normalCredit = getNormalCredit();
+        Integer basicMajorCredit = getBasicMajorCredit();
+        Integer techMajorCredit = getTechMajorCredit();
+        Integer presentCredit = getPresentCredit();
+        return new UserCreditResponse(majorCredit,cultureCredit,normalCredit,basicMajorCredit,techMajorCredit, presentCredit);
+    }
 }

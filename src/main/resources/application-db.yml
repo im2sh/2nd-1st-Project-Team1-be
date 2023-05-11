@@ -25,7 +25,7 @@ spring:
   jpa:
     show-sql: true
     database-platform: H2
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: create
     properties:
       hibernate:
         show_sql: true

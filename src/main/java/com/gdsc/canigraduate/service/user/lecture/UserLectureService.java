@@ -71,6 +71,7 @@ public class UserLectureService {
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
                 userLecture.addCredit(credit, userLectureDetail.getUserLectureType());
+                userService.userDetailCreditCal(user, credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
             }
             else{
@@ -79,6 +80,7 @@ public class UserLectureService {
                 userLectureDetail.setUserLecture(userLecture);
                 userLectureDetail.setType(userLectureDetail.getMajor());
                 userLecture.addCredit(credit, userLectureDetail.getUserLectureType());
+                userService.userDetailCreditCal(user, credit, userLectureDetail.getUserLectureType());
                 userLectureDetailRepository.save(userLectureDetail);
             }
         }
@@ -111,6 +113,7 @@ public class UserLectureService {
         }
         user.subSemester(totalSemester);
         user.subCredit(totalCredit);
+        user.InitCredit();
         user.userUpload(false);
     }
 
