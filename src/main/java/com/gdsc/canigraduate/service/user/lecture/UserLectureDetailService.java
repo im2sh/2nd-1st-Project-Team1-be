@@ -53,6 +53,7 @@ public class UserLectureDetailService {
             return false;
         User user = one.get();
         user.subCredit(lectureDetail.getCredit());
+        user.subDetailCredit(lectureDetail.getCredit(), lectureDetail.getUserLectureType());
         if(userLecture.getMajorCredit() == 0 && userLecture.getCultureCredit() == 0 && userLecture.getNormalCredit() == 0) {
             userLectureRepository.delete(userLecture);
             user.subSemester(1);
@@ -85,5 +86,6 @@ public class UserLectureDetailService {
             save(detail);
         }
         user.addCredit(credit);
+        user.addDetailCredit(credit,detail.getUserLectureType());
     }
 }

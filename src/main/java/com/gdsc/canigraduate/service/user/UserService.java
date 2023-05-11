@@ -156,4 +156,8 @@ public class UserService {
         user.userGraduation(false);
     }
 
+    @Transactional
+    public void userDetailCreditCal(User user, Integer credit, UserLectureType type){
+        user.addDetailCredit(credit, type);
+    }
 }

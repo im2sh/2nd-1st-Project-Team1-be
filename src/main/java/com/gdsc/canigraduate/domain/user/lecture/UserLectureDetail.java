@@ -75,7 +75,7 @@ public class UserLectureDetail {
 
     public UserLectureDetailResponse toResponse(){
         Integer lectureYear = getLectureYear(); // 연도
-        String semester =getSemester();
+        String semester = getSemester();
         String major = getMajor(); // 교과목 구분
         String code = getCode();// 교과목코드
         String lectureName = getLectureName(); //교과목명
