@@ -43,7 +43,7 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
         return jpaQueryFactory.selectFrom(lecture)
                 .where(
                         containName(searchParams.getName()),
-                        eqCode(searchParams.getCode()),
+                        containCode(searchParams.getCode()),
                         eqLectureYear(searchParams.getLectureYear()),
                         eqCredit(searchParams.getCredit()),
                         eqGrade(searchParams.getGrade()),
@@ -59,8 +59,8 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
         return isValue(name) ? lecture.name.contains(name) : null;
     }
 
-    private BooleanExpression eqCode(String code) {
-        return isValue(code) ? lecture.code.eq(code) : null;
+    private BooleanExpression containCode(String code) {
+        return isValue(code) ? lecture.code.contains(code) : null;
     }
 
     private BooleanExpression eqLectureYear(Integer year) {
