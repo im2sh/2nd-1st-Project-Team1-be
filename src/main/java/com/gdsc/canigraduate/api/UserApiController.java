@@ -70,4 +70,14 @@ public class UserApiController {
         userService.modifyUserPw(token, request);
         return ResponseEntity.ok().body(new ResponseDto("비밀번호가 변경되었습니다."));
     }
+
+    @PostMapping("/user/verification/{token}")
+    public ResponseEntity<ResponseDto> verificationUser(@PathVariable("token")String token){
+        userService.checkVerificationUser(token);
+        boolean verification = userService.isVerificationUser(token);
+        if(verification == false)
+            return ResponseEntity.ok().body(new ResponseDto("졸업요건에 만족하지 못했습니다."));
+        return ResponseEntity.ok().body(new ResponseDto("졸업요건에 만족합니다."));
+    }
+
 }
