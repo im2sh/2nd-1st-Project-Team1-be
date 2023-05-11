@@ -27,8 +27,9 @@ import java.util.Optional;
  * Created by im2sh
  */
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserLectureController {
     private final FileService fileService;
     private final UserService userService;
