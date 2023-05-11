@@ -9,5 +9,6 @@ public enum UserLectureType {
     교양,
     일반선택,
     전공기반,
-    공학전공
+    공학전공,
+    기본소양
 }

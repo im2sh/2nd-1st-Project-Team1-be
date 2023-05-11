@@ -3,10 +3,7 @@ package com.gdsc.canigraduate.api;
 import com.gdsc.canigraduate.domain.user.SessionConst;
 import com.gdsc.canigraduate.domain.user.User;
 import com.gdsc.canigraduate.dto.response.ResponseDto;
-import com.gdsc.canigraduate.dto.user.UserLoginRequest;
-import com.gdsc.canigraduate.dto.user.UserLoginResponse;
-import com.gdsc.canigraduate.dto.user.UserPwModificationRequest;
-import com.gdsc.canigraduate.dto.user.UserSignUpRequest;
+import com.gdsc.canigraduate.dto.user.*;
 import com.gdsc.canigraduate.service.user.LoginService;
 import com.gdsc.canigraduate.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -80,4 +77,9 @@ public class UserApiController {
         return ResponseEntity.ok().body(new ResponseDto("졸업요건에 만족합니다."));
     }
 
+    @GetMapping("/user/credit/{token}")
+    public ResponseEntity<UserCreditResponse> showCredit(@PathVariable("token")String token){
+        User user = userService.findByToken(token);
+        return ResponseEntity.ok().body(new UserCreditResponse(user.getMajorCredit(),user.getCultureCredit(),user.getNormalCredit(),user.getBasicMajorCredit(),user.getTechMajorCredit(),user.getPresentCredit()));
+    }
 }
