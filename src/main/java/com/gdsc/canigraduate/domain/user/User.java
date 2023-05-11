@@ -4,6 +4,7 @@ import com.gdsc.canigraduate.domain.BaseEntity;
 import com.gdsc.canigraduate.domain.BooleanToYNConverter;
 import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
+import com.gdsc.canigraduate.domain.user.lecture.UserLectureType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +44,11 @@ public class User extends BaseEntity {
 
     @Convert(converter = BooleanToYNConverter.class)
     private boolean isUpload;
+
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean isGraduation;
+
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserLecture> userLectureList = new ArrayList<>();
 
@@ -103,4 +109,31 @@ public class User extends BaseEntity {
     public void subSemester(Integer semester){
         this.semester -= semester;
     }
+
+    public void userGraduation(boolean yn){
+        if(yn == true)
+            this.isGraduation = true;
+        else
+            this.isGraduation = false;
+    }
+    public UserLectureType globalSoft(UserLectureType userLectureType){
+        if(userLectureType.equals("전공"))
+            return UserLectureType.전공;
+        else if(userLectureType.equals("교양"))
+            return UserLectureType.교양;
+        else if(userLectureType.equals("일반선택"))
+            return UserLectureType.일반선택;
+        return null;
+    }
+
+    public UserLectureType deepComputer(UserLectureType userLectureType){
+        if(userLectureType.equals("전공기반"))
+            return UserLectureType.전공기반;
+        else if(userLectureType.equals("공학전공"))
+            return UserLectureType.공학전공;
+        else if(userLectureType.equals("교양"))
+            return UserLectureType.교양;
+        return null;
+    }
+
 }
