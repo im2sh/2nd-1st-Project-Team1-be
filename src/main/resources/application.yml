@@ -1,4 +1,5 @@
 server:
+  host: ${SERVER_HOST}
   port: ${SPRING_PORT}
 
 spring:
