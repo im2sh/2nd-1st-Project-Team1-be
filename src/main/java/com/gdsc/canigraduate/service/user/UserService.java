@@ -2,6 +2,7 @@ package com.gdsc.canigraduate.service.user;
 
 import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.User;
+import com.gdsc.canigraduate.domain.user.UserGraduationInfo;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureDetail;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureType;
@@ -105,7 +106,7 @@ public class UserService {
 
     public boolean isVerificationUser(String token){
         User user = findByToken(token);
-        boolean graduation = user.isGraduation();
+        boolean graduation = user.isCreditGraduation();
         if(graduation == true)
             return true;
         else
@@ -159,5 +160,15 @@ public class UserService {
     @Transactional
     public void userDetailCreditCal(User user, Integer credit, UserLectureType type){
         user.addDetailCredit(credit, type);
+    }
+
+    @Transactional
+    public void setGraduationInfo(User user, UserGraduationInfo info){
+        user.setUserGraduationInfo(info);
+    }
+
+    @Transactional
+    public void setIsConditionGraduation(User user, boolean yn){
+        user.setIsConditionGradation(yn);
     }
 }

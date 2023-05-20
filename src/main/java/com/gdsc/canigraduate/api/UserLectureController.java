@@ -114,7 +114,6 @@ public class UserLectureController {
         userLectureDetailService.add_one(dto,user);
         return ResponseEntity.ok().body(new ResponseDto("수업 추가"));
     }
-
 }
 
 
