@@ -5,7 +5,6 @@ import com.gdsc.canigraduate.domain.BooleanToYNConverter;
 import com.gdsc.canigraduate.domain.Department;
 import com.gdsc.canigraduate.domain.user.lecture.UserLecture;
 import com.gdsc.canigraduate.domain.user.lecture.UserLectureType;
-import com.gdsc.canigraduate.dto.response.UserLectureResponse;
 import com.gdsc.canigraduate.dto.user.UserCreditResponse;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,7 +47,10 @@ public class User extends BaseEntity {
     private boolean isUpload;
 
     @Convert(converter = BooleanToYNConverter.class)
-    private boolean isGraduation;
+    private boolean isCreditGraduation; // 졸업학점을 넘기는 지
+
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean isConditionGraduation; // 졸업 요건을 만족하는 지
 
     private Integer majorCredit;
     private Integer cultureCredit;
@@ -64,6 +66,9 @@ public class User extends BaseEntity {
     @Column(name = "USER_ID")
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "GRADUATION_ID")
+    private UserGraduationInfo userGraduationInfo;
     @Builder
     public User(String classId, String userPw, String name, String token, Department department, Integer admissionYear) {
         this.classId = classId;
@@ -150,9 +155,9 @@ public class User extends BaseEntity {
 
     public void userGraduation(boolean yn){
         if(yn == true)
-            this.isGraduation = true;
+            this.isCreditGraduation = true;
         else
-            this.isGraduation = false;
+            this.isCreditGraduation = false;
     }
     public UserLectureType globalSoft(UserLectureType userLectureType){
         if(userLectureType.equals("전공"))
@@ -188,5 +193,16 @@ public class User extends BaseEntity {
         Integer techMajorCredit = getTechMajorCredit();
         Integer presentCredit = getPresentCredit();
         return new UserCreditResponse(majorCredit,cultureCredit,normalCredit,basicMajorCredit,techMajorCredit, presentCredit);
+    }
+
+    public void setUserGraduationInfo(UserGraduationInfo info){
+        this.userGraduationInfo = info;
+    }
+
+    public void setIsConditionGradation(boolean yn){
+        if(yn == true)
+            this.isConditionGraduation = true;
+        else
+            this.isConditionGraduation = false;
     }
 }
