@@ -2,9 +2,11 @@ package com.gdsc.canigraduate.api;
 
 import com.gdsc.canigraduate.domain.user.SessionConst;
 import com.gdsc.canigraduate.domain.user.User;
+import com.gdsc.canigraduate.domain.user.UserGraduationInfo;
 import com.gdsc.canigraduate.dto.response.ResponseDto;
 import com.gdsc.canigraduate.dto.user.*;
 import com.gdsc.canigraduate.service.user.LoginService;
+import com.gdsc.canigraduate.service.user.UserGraduationService;
 import com.gdsc.canigraduate.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
     private final UserService userService;
     private final LoginService loginService;
+    private final UserGraduationService userGraduationService;
 
     @PostMapping("/user/signup")
     public ResponseEntity<ResponseDto> saveUser(@Validated @RequestBody UserSignUpRequest request, BindingResult bindingResult){
@@ -81,5 +84,16 @@ public class UserApiController {
     public ResponseEntity<UserCreditResponse> showCredit(@PathVariable("token")String token){
         User user = userService.findByToken(token);
         return ResponseEntity.ok().body(new UserCreditResponse(user.getMajorCredit(),user.getCultureCredit(),user.getNormalCredit(),user.getBasicMajorCredit(),user.getTechMajorCredit(),user.getPresentCredit()));
+    }
+
+    @PostMapping("user/graduation/{token}")
+    public ResponseEntity<ResponseDto> graduationUser(@RequestBody UserGraduationInfoRequest info, @PathVariable String token){
+        UserGraduationInfo userGraduationInfo = userGraduationService.toEntity(info);
+        userGraduationService.save(token,userGraduationInfo);
+        boolean graduation = userGraduationService.checkGraduation(token);
+        if(!graduation)
+            return ResponseEntity.ok().body(new ResponseDto("졸업요건에 만족하지 못하였습니다."));
+
+        return ResponseEntity.ok().body(new ResponseDto("졸업요건에 만족합니다."));
     }
 }
