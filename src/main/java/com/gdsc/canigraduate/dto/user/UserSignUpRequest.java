@@ -23,7 +23,6 @@ public class UserSignUpRequest {
     private String name;
     private Department department;
 
-    private String token;
 
     public User toEntity(){
         User user = User.builder()
@@ -31,7 +30,6 @@ public class UserSignUpRequest {
                 .classId(classId)
                 .userPw(userPw)
                 .department(department)
-                .token(UUID.randomUUID().toString())
                 .admissionYear(Integer.valueOf(classId.substring(0, 4)))
                 .build();
         return user;

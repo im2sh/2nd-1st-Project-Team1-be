@@ -48,9 +48,7 @@ public class UserLectureService {
     public UserLecture findLectureBySemesterAndUserId(String semester, Long id){
         return userLectureRepository.findBySemesterAndUserId(semester,id);
     }
-//    public UserLecture findUserLectureByDetail(Long id){
-//        return userLectureRepository.findByLectureId(id);
-//    }
+
     @Transactional
     public void dividedLecture(String token, List<UserLectureDetailDTO> dto){
         User user = userRepository.findUserByToken(token);
@@ -86,6 +84,7 @@ public class UserLectureService {
         }
 
         user.setProfile(totalCredit, totalSemester);
+        user.calRestCredit();
         user.userUpload(true);
         userRepository.save(user);
     }
