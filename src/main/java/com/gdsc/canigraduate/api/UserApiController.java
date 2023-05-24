@@ -83,7 +83,7 @@ public class UserApiController {
     @GetMapping("/user/credit/{token}")
     public ResponseEntity<UserCreditResponse> showCredit(@PathVariable("token")String token){
         User user = userService.findByToken(token);
-        return ResponseEntity.ok().body(new UserCreditResponse(user.getMajorCredit(),user.getCultureCredit(),user.getNormalCredit(),user.getBasicMajorCredit(),user.getTechMajorCredit(),user.getPresentCredit()));
+        return ResponseEntity.ok().body(new UserCreditResponse(user.getMajorCredit(),user.getCultureCredit(),user.getNormalCredit(),user.getBasicMajorCredit(),user.getTechMajorCredit(),user.getPresentCredit(), user.getRestMajor(), user.getRestCulture(), user.getRestNormal(), user.getRestBasicMajor(), user.getRestTechMajor(), user.getRestPresent()));
     }
 
     @PostMapping("user/graduation/{token}")
